@@ -39,7 +39,7 @@ def _fock_n(n: int, cutoff_dims: int) -> np.ndarray:
     return _fock
 
 
-def mono_fock_state_from_str(
+def _mono_fock_state_from_str(
     state_str: str, cutoff_dims: int, t: str = "kron"
 ) -> np.ndarray:
     """
@@ -53,7 +53,7 @@ def mono_fock_state_from_str(
     return _tensor_func(*state_list, t=t)
 
 
-def mono_qubit_state_from_str(
+def _mono_qubit_state_from_str(
     state_str: str, cutoff_dims: int, t: str = "kron"
 ) -> np.ndarray:
     """
@@ -119,16 +119,20 @@ def state_from_str(
 def qubit_state_from_str(
     state_str: str, cutoff_dims: int, t: str = "kron"
 ) -> np.ndarray:
-    return state_from_str(mono_qubit_state_from_str, state_str, cutoff_dims, t)
+    return state_from_str(_mono_qubit_state_from_str, state_str, cutoff_dims, t)
 
 
 def fock_state_from_str(
     state_str: str, cutoff_dims: int, t: str = "kron"
 ) -> np.ndarray:
-    return state_from_str(mono_fock_state_from_str, state_str, cutoff_dims, t)
+    return state_from_str(_mono_fock_state_from_str, state_str, cutoff_dims, t)
 
 
 def bell_state(cutoff_dims: int, t: str = "kron") -> np.ndarray:
+    """
+    bell state: 00+11
+    - t: "tensor" / "kron"
+    """
     return qubit_state_from_str("00+11", cutoff_dims, t)
 
 
